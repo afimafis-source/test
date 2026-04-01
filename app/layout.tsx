@@ -1,25 +1,28 @@
-import type { Metadata } from 'next'
-import './globals.css'
-import { Providers } from './providers'
+// app/dashboard/layout.tsx
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
+import { redirect } from 'next/navigation'
+import Navbar from '@/components/Navbar'
+import DashboardSidebar from '@/components/DashboardSidebar'
 
-export const metadata: Metadata = {
-  title: {
-    default: 'ProxyZen',
-    template: '%s | ProxyZen',
-  },
-  description: 'Premium residential proxy platform for scraping, automation and geo-targeted access.',
-}
-
-export default function RootLayout({
+export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const session = await getServerSession(authOptions)
+
+  if (!session) redirect('/auth/login')
+
   return (
-    <html lang="tr">
-      <body>
-        <Providers>{children}</Providers>
-      </body>
-    </html>
+    <>
+      <Navbar />
+      <div className="flex min-h-[calc(100vh-80px)]">
+        <DashboardSidebar />
+        <main className="flex-1 p-6">
+          {children}
+        </main>
+      </div>
+    </>
   )
 }
