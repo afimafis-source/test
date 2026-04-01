@@ -1,0 +1,123 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,600;12..96,700;12..96,800&family=DM+Mono:wght@400;500&display=swap');
+
+:root {
+  --font-bricolage: 'Bricolage Grotesque', sans-serif;
+  --font-dm-mono:   'DM Mono', monospace;
+}
+
+@layer base {
+  html { @apply scroll-smooth; }
+  body {
+    @apply bg-bg text-white antialiased;
+    font-family: var(--font-bricolage);
+  }
+  * { @apply border-border box-border; }
+}
+
+@layer components {
+  /* ── Buttons ───────────────────────────────────────────── */
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-lg
+           bg-accent text-black font-semibold text-sm
+           hover:bg-cyan-400 transition-all duration-200 cursor-pointer;
+  }
+  .btn-outline {
+    @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-lg
+           border border-border2 text-white font-semibold text-sm
+           hover:border-accent hover:text-accent transition-all duration-200 cursor-pointer;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 px-4 py-2 rounded-lg
+           text-gray-400 font-medium text-sm
+           hover:bg-surface hover:text-white transition-all duration-200 cursor-pointer;
+  }
+  .btn-danger {
+    @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-lg
+           bg-danger text-white font-semibold text-sm
+           hover:bg-red-600 transition-all duration-200 cursor-pointer;
+  }
+
+  /* ── Cards ─────────────────────────────────────────────── */
+  .card {
+    @apply bg-surface border border-border rounded-2xl p-6;
+  }
+
+  /* ── Form inputs ────────────────────────────────────────── */
+  .input {
+    @apply w-full bg-surface2 border border-border2 text-white
+           px-4 py-2.5 rounded-lg text-sm outline-none
+           focus:border-accent transition-colors duration-200
+           placeholder:text-gray-600;
+  }
+  .label {
+    @apply block text-sm font-semibold text-gray-400 mb-2;
+  }
+
+  /* ── Badges ─────────────────────────────────────────────── */
+  .badge-green  { @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-neon/10 text-neon border border-neon/20; }
+  .badge-red    { @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-danger/10 text-danger border border-danger/20; }
+  .badge-yellow { @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-gold/10 text-gold border border-gold/20; }
+  .badge-blue   { @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-accent/10 text-accent border border-accent/20; }
+  .badge-gray   { @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-gray-800 text-gray-400 border border-gray-700; }
+
+  /* ── Sidebar link ───────────────────────────────────────── */
+  .sidebar-link {
+    @apply flex items-center gap-3 px-3 py-2.5 rounded-lg
+           text-gray-400 text-sm font-medium
+           hover:bg-surface2 hover:text-white transition-all duration-150;
+  }
+  .sidebar-link.active {
+    @apply bg-surface2 text-accent;
+  }
+
+  /* ── Stat card ──────────────────────────────────────────── */
+  .stat-card {
+    @apply relative bg-surface border border-border rounded-2xl p-5 overflow-hidden;
+  }
+  .stat-card::before {
+    content: '';
+    @apply absolute top-0 left-0 right-0 h-0.5 bg-accent;
+  }
+  .stat-card.green::before { @apply bg-neon; }
+  .stat-card.yellow::before { @apply bg-gold; }
+  .stat-card.red::before { @apply bg-danger; }
+
+  /* ── Flash messages ─────────────────────────────────────── */
+  .flash {
+    @apply fixed top-20 right-5 z-50 flex items-center gap-2
+           px-5 py-3 rounded-xl text-sm font-semibold
+           shadow-2xl animate-slide-in max-w-sm;
+  }
+  .flash-success { @apply bg-neon/10 border border-neon/30 text-neon; }
+  .flash-error   { @apply bg-danger/10 border border-danger/30 text-danger; }
+  .flash-info    { @apply bg-accent/10 border border-accent/30 text-accent; }
+
+  /* ── Code block ─────────────────────────────────────────── */
+  .code-block {
+    @apply relative bg-bg border border-border rounded-lg p-4
+           font-mono text-sm text-gray-400 overflow-x-auto;
+  }
+  .copy-btn {
+    @apply absolute top-2 right-2 bg-surface2 border border-border2
+           text-gray-400 px-2.5 py-1 rounded text-xs
+           hover:border-accent hover:text-accent transition-all;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-accent to-purple-400 bg-clip-text text-transparent;
+  }
+  .bg-grid {
+    background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  .glow-accent { box-shadow: 0 0 20px rgba(0, 194, 255, 0.15); }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+}
