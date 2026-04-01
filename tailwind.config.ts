@@ -9,27 +9,31 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        bg:       '#0b0d11',
-        surface:  '#111318',
-        surface2: '#161920',
-        border:   '#1e2028',
-        border2:  '#262932',
-        accent:   '#00c2ff',
-        accent2:  '#7b5ea7',
-        neon:     '#22d3a0',
-        gold:     '#f5c842',
-        danger:   '#f05252',
+        bg: '#f8fafc',
+        surface: '#ffffff',
+        surface2: '#f1f5f9',
+        border: '#e2e8f0',
+        border2: '#cbd5e1',
+        accent: '#2563eb',
+        accent2: '#7c3aed',
+        neon: '#0f766e',
+        gold: '#b45309',
+        danger: '#dc2626',
+        text: '#0f172a',
+        muted: '#64748b',
       },
       fontFamily: {
-        sans: ['var(--font-bricolage)', 'sans-serif'],
+        sans: ['Inter', 'var(--font-bricolage)', 'sans-serif'],
         mono: ['var(--font-dm-mono)', 'monospace'],
       },
       backgroundImage: {
-        'hero-glow': 'radial-gradient(ellipse 80% 60% at 50% -10%, rgba(0,194,255,0.08) 0%, transparent 60%)',
-        'grid-pattern': "linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)",
+        'hero-glow':
+          'radial-gradient(ellipse 80% 60% at 50% -10%, rgba(37,99,235,0.14) 0%, transparent 60%)',
+        'grid-pattern':
+          'linear-gradient(rgba(15,23,42,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(15,23,42,0.05) 1px, transparent 1px)',
       },
       backgroundSize: {
-        'grid': '48px 48px',
+        grid: '48px 48px',
       },
       animation: {
         'fade-up': 'fadeUp 0.5s ease both',
@@ -39,16 +43,20 @@ const config: Config = {
       keyframes: {
         fadeUp: {
           from: { opacity: '0', transform: 'translateY(20px)' },
-          to:   { opacity: '1', transform: 'translateY(0)' },
+          to: { opacity: '1', transform: 'translateY(0)' },
         },
         pulseDot: {
           '0%, 100%': { opacity: '1', transform: 'scale(1)' },
-          '50%':      { opacity: '0.5', transform: 'scale(0.85)' },
+          '50%': { opacity: '0.5', transform: 'scale(0.85)' },
         },
         slideIn: {
           from: { transform: 'translateX(100%)', opacity: '0' },
-          to:   { transform: 'translateX(0)', opacity: '1' },
+          to: { transform: 'translateX(0)', opacity: '1' },
         },
+      },
+      boxShadow: {
+        soft: '0 10px 30px rgba(15, 23, 42, 0.08)',
+        glow: '0 20px 40px rgba(37, 99, 235, 0.14)',
       },
     },
   },

@@ -1,8 +1,9 @@
 'use client'
-// components/Navbar.tsx
+
 import Link from 'next/link'
 import { useSession, signOut } from 'next-auth/react'
 import { useState } from 'react'
+import { ChevronDown, Shield, LayoutDashboard, Settings, LogOut } from 'lucide-react'
 
 export default function Navbar() {
   const { data: session } = useSession()
@@ -10,69 +11,106 @@ export default function Navbar() {
   const user = session?.user as any
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 h-16 flex items-center justify-between px-6 md:px-10
-                    bg-bg/80 backdrop-blur-xl border-b border-border">
-      {/* Brand */}
-      <Link href="/" className="text-xl font-extrabold tracking-tight">
-        Proxy<span className="text-accent">Zen</span>
-      </Link>
+    <header className="sticky top-0 z-50 border-b border-border/80 bg-white/80 backdrop-blur-xl">
+      <div className="section flex h-20 items-center justify-between">
+        <Link href="/" className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-violet-600 text-sm font-bold text-white shadow-glow">
+            PZ
+          </div>
+          <div>
+            <div className="text-base font-extrabold tracking-tight text-slate-950">ProxyZen</div>
+            <div className="text-xs text-slate-500">Premium Proxy Infrastructure</div>
+          </div>
+        </Link>
 
-      {/* Desktop links */}
-      <div className="hidden md:flex items-center gap-1">
-        <Link href="/pricing" className="px-3 py-1.5 text-sm text-gray-400 hover:text-white rounded-lg hover:bg-surface transition-all">Fiyatlar</Link>
-        <Link href="/locations" className="px-3 py-1.5 text-sm text-gray-400 hover:text-white rounded-lg hover:bg-surface transition-all">Lokasyonlar</Link>
-        <Link href="/faq" className="px-3 py-1.5 text-sm text-gray-400 hover:text-white rounded-lg hover:bg-surface transition-all">SSS</Link>
-      </div>
+        <nav className="hidden items-center gap-8 md:flex">
+          <Link href="/pricing" className="text-sm font-medium text-slate-600 hover:text-slate-950">
+            Fiyatlar
+          </Link>
+          <Link href="/locations" className="text-sm font-medium text-slate-600 hover:text-slate-950">
+            Lokasyonlar
+          </Link>
+          <Link href="/faq" className="text-sm font-medium text-slate-600 hover:text-slate-950">
+            SSS
+          </Link>
+        </nav>
 
-      {/* Actions */}
-      <div className="flex items-center gap-3">
-        {session ? (
-          <>
-            {user?.role === 'admin' && (
-              <Link href="/admin" className="hidden md:flex px-3 py-1.5 text-xs font-bold rounded-lg bg-gold/10 text-gold border border-gold/20 hover:bg-gold/20 transition-all">
-                Admin
-              </Link>
-            )}
+        <div className="flex items-center gap-3">
+          {session ? (
             <div className="relative">
-              <button onClick={() => setOpen(!open)} className="flex items-center gap-2 p-1 rounded-xl hover:bg-surface transition-all">
-                {user?.image ? (
-                  <img src={user.image} className="w-8 h-8 rounded-full object-cover" alt="" />
-                ) : (
-                  <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center text-black font-bold text-sm">
-                    {user?.name?.[0]?.toUpperCase()}
+              <button
+                onClick={() => setOpen(!open)}
+                className="flex items-center gap-3 rounded-2xl border border-border bg-white px-3 py-2 shadow-soft hover:border-blue-200"
+              >
+                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-600 font-bold text-white">
+                  {user?.image ? (
+                    <img src={user.image} alt={user?.name || 'User'} className="h-9 w-9 rounded-full object-cover" />
+                  ) : (
+                    user?.name?.[0]?.toUpperCase() || 'U'
+                  )}
+                </div>
+                <div className="hidden text-left sm:block">
+                  <div className="text-sm font-semibold text-slate-900">
+                    {user?.name?.split(' ')[0] || 'Kullanıcı'}
                   </div>
-                )}
-                <span className="hidden md:block text-sm font-semibold">{user?.name?.split(' ')[0]}</span>
-                <i className="fa fa-chevron-down text-xs text-gray-500" />
+                  <div className="text-xs text-slate-500">{user?.email}</div>
+                </div>
+                <ChevronDown className="h-4 w-4 text-slate-500" />
               </button>
 
               {open && (
-                <div className="absolute right-0 top-12 w-48 bg-surface border border-border rounded-xl shadow-2xl overflow-hidden z-50">
-                  <Link href="/dashboard" onClick={() => setOpen(false)} className="flex items-center gap-2 px-4 py-2.5 text-sm hover:bg-surface2 transition-all">
-                    <i className="fa fa-gauge w-4 text-accent" /> Dashboard
+                <div className="absolute right-0 mt-3 w-64 overflow-hidden rounded-2xl border border-border bg-white p-2 shadow-2xl">
+                  {user?.role === 'admin' && (
+                    <Link
+                      href="/admin"
+                      onClick={() => setOpen(false)}
+                      className="flex items-center gap-2 rounded-xl px-4 py-3 text-sm text-slate-700 hover:bg-slate-50"
+                    >
+                      <Shield className="h-4 w-4" />
+                      Admin
+                    </Link>
+                  )}
+
+                  <Link
+                    href="/dashboard"
+                    onClick={() => setOpen(false)}
+                    className="flex items-center gap-2 rounded-xl px-4 py-3 text-sm text-slate-700 hover:bg-slate-50"
+                  >
+                    <LayoutDashboard className="h-4 w-4" />
+                    Dashboard
                   </Link>
-                  <Link href="/dashboard/settings" onClick={() => setOpen(false)} className="flex items-center gap-2 px-4 py-2.5 text-sm hover:bg-surface2 transition-all">
-                    <i className="fa fa-gear w-4 text-gray-400" /> Ayarlar
+
+                  <Link
+                    href="/settings"
+                    onClick={() => setOpen(false)}
+                    className="flex items-center gap-2 rounded-xl px-4 py-3 text-sm text-slate-700 hover:bg-slate-50"
+                  >
+                    <Settings className="h-4 w-4" />
+                    Ayarlar
                   </Link>
-                  <div className="border-t border-border my-1" />
-                  <button onClick={() => signOut({ callbackUrl: '/' })} className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-danger hover:bg-surface2 transition-all">
-                    <i className="fa fa-right-from-bracket w-4" /> Çıkış Yap
+
+                  <button
+                    onClick={() => signOut({ callbackUrl: '/' })}
+                    className="flex w-full items-center gap-2 rounded-xl px-4 py-3 text-left text-sm text-red-600 hover:bg-red-50"
+                  >
+                    <LogOut className="h-4 w-4" />
+                    Çıkış Yap
                   </button>
                 </div>
               )}
             </div>
-          </>
-        ) : (
-          <>
-            <Link href="/auth/login" className="hidden md:block text-sm text-gray-400 hover:text-white px-3 py-1.5 rounded-lg hover:bg-surface transition-all">
-              Giriş Yap
-            </Link>
-            <Link href="/auth/register" className="btn-primary text-sm px-4 py-2">
-              Ücretsiz Dene
-            </Link>
-          </>
-        )}
+          ) : (
+            <>
+              <Link href="/auth/login" className="btn-ghost">
+                Giriş Yap
+              </Link>
+              <Link href="/auth/register" className="btn-primary">
+                Ücretsiz Dene
+              </Link>
+            </>
+          )}
+        </div>
       </div>
-    </nav>
+    </header>
   )
 }
